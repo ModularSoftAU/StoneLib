@@ -16,7 +16,7 @@ pom.xml +
 </repository>
 ...
 <dependency>
-    <groupId>com.github.palsmo</groupId>
+    <groupId>com.github.ModularSoftAU</groupId>
     <artifactId>StoneLib</artifactId>
     <version>1.0</version>
     <scope>provided</scope>
