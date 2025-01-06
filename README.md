@@ -1,6 +1,7 @@
 For code integration examples view:\
     - https://github.com/ModularSoftAU/zander
 
+Instructions:
 ```shell
 # compile library
 mvn clean package
