@@ -107,7 +107,7 @@ public final class ConfigValidator {
         if (!config.isInt(field))
             return ValidationResult.failure(String.format("Reason '%s' wasn't an integer number", field));
         int value = config.getInt(field);
-        if (value > 0)
+        if (value >= 0)
             return ValidationResult.failure(String.format("Reason '%s' wasn't negative", field));
         return ValidationResult.success();
     };
@@ -124,7 +124,7 @@ public final class ConfigValidator {
 
     public static final Validator isValidString = (config, field) -> {
         if (!config.isString(field))
-            return ValidationResult.failure(String.format("Reason '%s' wasn't a text string"));
+            return ValidationResult.failure(String.format("Reason '%s' wasn't a text string", field));
         return ValidationResult.success();
     };
 
