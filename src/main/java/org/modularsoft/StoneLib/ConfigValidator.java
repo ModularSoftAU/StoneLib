@@ -95,10 +95,50 @@ public final class ConfigValidator {
         return ValidationResult.success();
     };
 
-    /// Validate `field` value is an integer decimal.
+    /// Validate `field` value is an integer number.
     public static final Validator isValidInt = (config, field) -> {
         if (!config.isInt(field))
             return ValidationResult.failure(String.format("Reason '%s' wasn't an integer number", field));
+        return ValidationResult.success();
+    };
+
+    /// Validate `field` value is a negative integer number.
+    public static final Validator isValidIntNeg = (config, field) -> {
+        if (!config.isInt(field))
+            return ValidationResult.failure(String.format("Reason '%s' wasn't an integer number", field));
+        int value = config.getInt(field);
+        if (value >= 0)
+            return ValidationResult.failure(String.format("Reason '%s' wasn't negative", field));
+        return ValidationResult.success();
+    };
+
+    /// Validate `field` value is a positive integer number.
+    public static final Validator isValidIntPos = (config, field) -> {
+        if (!config.isInt(field))
+            return ValidationResult.failure(String.format("Reason '%s' wasn't an integer number", field));
+        int value = config.getInt(field);
+        if (value < 0)
+            return ValidationResult.failure(String.format("Reason '%s' wasn't positive", field));
+        return ValidationResult.success();
+    };
+
+    public static final Validator isValidString = (config, field) -> {
+        if (!config.isString(field))
+            return ValidationResult.failure(String.format("Reason '%s' wasn't a text string", field));
+        return ValidationResult.success();
+    };
+
+    /// Validate `field` value is a list.
+    public static final Validator isValidList = (config, field) -> {
+        if (!config.isList(field))
+            return ValidationResult.failure(String.format("Reason '%s' wasn't a list", field));
+        return ValidationResult.success();
+    };
+
+    /// Validate `field` value is a configuration section.
+    public static final Validator isValidSection = (config, field) -> {
+        if (!config.isConfigurationSection(field))
+            return ValidationResult.failure(String.format("Reason '%s' wasn't a section", field));
         return ValidationResult.success();
     };
 
@@ -107,10 +147,8 @@ public final class ConfigValidator {
         if (!config.isDouble(field))
             return ValidationResult.failure(String.format("Reason '%s' wasn't a decimal number", field));
         double value = config.getDouble(field);
-        if (value < -90.0 || value > 90.0) {
-            return ValidationResult
-                    .failure(String.format("Reason '%s' wasn't between -90.0 and 90.0", field));
-        }
+        if (value < -90.0 || value > 90.0)
+            return ValidationResult.failure(String.format("Reason '%s' wasn't between -90.0 and 90.0", field));
         return ValidationResult.success();
     };
 
@@ -134,6 +172,16 @@ public final class ConfigValidator {
         return ValidationResult.success();
     };
 
+    /// Validate `field` value is proper percent.
+    public static final Validator isValidPercent = (config, field) -> {
+        if (!config.isDouble(field))
+            return ValidationResult.failure(String.format("Reason '%s' wasn't a decimal number", field));
+        double value = config.getDouble(field);
+        if (value < 0.0 || value > 1.0)
+            return ValidationResult.failure(String.format("Reason '%s' wasn't between 0.0 and 1.0", field));
+        return ValidationResult.success();
+    };
+
     /// Validate `field` value is the name of a valid world.
     public static final Validator isValidWorld = (config, field) -> {
         if (!config.isString(field))
@@ -147,7 +195,7 @@ public final class ConfigValidator {
     };
 
     /// Validate `field` value is legacy string properly formatted with single %p%
-    public static final ValidatorWithSetter<TextComponent> isValidJoinLeave = (config, field, setter) -> {
+    public static final ValidatorWithSetter<TextComponent> isValidPlayerString = (config, field, setter) -> {
         // 1. verify field value value is string
         // 2. verify field value has single %p% placeholder
         // 3. verify field value can be converted to adventure text component

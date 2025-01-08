@@ -1,8 +1,8 @@
-\target
-.idea
-/target
-/.idea
 *.iml
+.idea
+/.idea
+/target
+\target
 
 # jdtls generation
 .classpath
